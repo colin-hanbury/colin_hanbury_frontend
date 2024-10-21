@@ -9,26 +9,25 @@ enum RegistrationStatus {
 
 class RegistrationState extends Equatable {
   final RegistrationStatus status;
-  final String email;
-  final String password;
+  final String error;
 
-  RegistrationState(
-      {this.status = RegistrationStatus.unregistered,
-      String? email,
-      String? password})
-      : email = email ?? '',
-        password = password ?? '';
+  RegistrationState({
+    this.status = RegistrationStatus.unregistered,
+    String? error,
+  }) : error = error ?? '';
 
   @override
-  List<Object?> get props => [status, email, password];
+  List<Object?> get props => [
+        status,
+        error,
+      ];
 
   RegistrationState copyWith({
     RegistrationStatus? status,
-    String? email,
-    String? password,
+    String? error,
   }) =>
       RegistrationState(
-          status: status ?? this.status,
-          email: email ?? this.email,
-          password: password ?? this.password);
+        status: status ?? this.status,
+        error: error ?? this.error,
+      );
 }

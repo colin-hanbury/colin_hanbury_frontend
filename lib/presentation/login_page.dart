@@ -22,12 +22,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         leading: IconButton(
           onPressed: Navigator.of(context).pop,
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSecondaryContainer,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
         title: Text(
@@ -63,7 +63,12 @@ class _LoginPageState extends State<LoginPage> {
           });
           return const SizedBox();
         case AuthStatus.error:
-          return _loginForm();
+          return Stack(
+            children: [
+              _loginForm(),
+              _showAlert(state.error),
+            ],
+          );
         case AuthStatus.loading:
           return const Center(
             child: CircularProgressIndicator(),
@@ -72,6 +77,24 @@ class _LoginPageState extends State<LoginPage> {
           return _loginForm();
       }
     });
+  }
+
+  Widget _showAlert(String error) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => AlertDialog(
+        title: const Text('Error'),
+        content: SingleChildScrollView(
+          child: Text(error),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Dismiss'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+    return const SizedBox();
   }
 
   Widget _loginForm() {

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class CandidatesEvent extends Equatable {
+class AssociatesEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
@@ -16,4 +16,4 @@ class CandidatesEvent extends Equatable {
 //   List<Object?> get props => [name];
 // }
 
-class LoadCandidates extends CandidatesEvent {}
+class LoadAssociates extends AssociatesEvent {}

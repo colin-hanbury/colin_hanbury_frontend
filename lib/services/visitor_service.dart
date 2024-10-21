@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 
-class VisitorService {
+class AssociatesService {
   final dio = Dio();
   final baseURL =
       'https://colin-hanbury-showcase-server-511903749491.australia-southeast2.run.app';
 
-  Future<dynamic> getVisitor(String name) async {
-    Response response = await dio.get('$baseURL/visitors?$name');
+  Future<dynamic> getAssociate(String name) async {
+    Response response = await dio.get('$baseURL/associates?$name');
     return response.data;
   }
 
-  Future<dynamic> getVisitors() async {
-    Response response = await dio.get('$baseURL/visitors');
+  Future<dynamic> getAssociates() async {
+    Response response = await dio.get('$baseURL/associates');
     return response.data;
     // return [
     //   {
@@ -27,9 +27,9 @@ class VisitorService {
     // ];
   }
 
-  Future<dynamic> addVisitor(String name) async {
+  Future<dynamic> addAssociate(String name) async {
     Response response =
-        await dio.post('$baseURL/visitors', data: {'name': name});
+        await dio.post('$baseURL/associates', data: {'name': name});
     return response;
   }
 }

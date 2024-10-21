@@ -1,15 +1,17 @@
 import 'dart:developer';
 
+import 'package:colin_hanbury_frontend/bloc/associates/associates_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/auth/auth_bloc.dart';
-import 'package:colin_hanbury_frontend/bloc/candidates/candidates_bloc.dart';
+import 'package:colin_hanbury_frontend/bloc/chat/chat_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/intro/intro_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/registration/registration_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/theme/theme_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/theme/theme_state.dart';
 import 'package:colin_hanbury_frontend/presentation/home_page.dart';
+import 'package:colin_hanbury_frontend/repositories/associates_repo.dart';
 import 'package:colin_hanbury_frontend/repositories/auth_repo.dart';
+import 'package:colin_hanbury_frontend/repositories/chat_repo.dart';
 import 'package:colin_hanbury_frontend/repositories/registration_repo.dart';
-import 'package:colin_hanbury_frontend/repositories/visitor_repo.dart';
 import 'package:colin_hanbury_frontend/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,31 +24,44 @@ void main() async {
     runApp(
       MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(create: (BuildContext context) => VisitorRepo()),
-          RepositoryProvider(create: (BuildContext context) => AuthRepo()),
+          RepositoryProvider(
+            create: (BuildContext context) => AssociatesRepo(),
+          ),
+          RepositoryProvider(
+            create: (BuildContext context) => AuthRepo(),
+          ),
           RepositoryProvider(
               create: (BuildContext context) => RegistrationRepo()),
-          //more repos
+          RepositoryProvider(
+            create: (BuildContext context) => ChatRepo(),
+          ),
         ],
         child: MultiBlocProvider(
           providers: [
-            BlocProvider<CandidatesBLoC>(
+            BlocProvider<AssociatesBLoC>(
               create: (BuildContext context) =>
-                  CandidatesBLoC(visitorRepo: context.read<VisitorRepo>()),
+                  AssociatesBLoC(visitorRepo: context.read<AssociatesRepo>()),
             ),
             BlocProvider<ThemeBloc>(
               create: (BuildContext context) => ThemeBloc(),
             ),
             BlocProvider<AuthBloc>(
-              create: (BuildContext context) =>
-                  AuthBloc(authRepo: context.read<AuthRepo>()),
+              create: (BuildContext context) => AuthBloc(
+                authRepo: context.read<AuthRepo>(),
+              ),
             ),
             BlocProvider<RegistrationBloc>(
               create: (BuildContext context) => RegistrationBloc(
-                  registrationRepo: context.read<RegistrationRepo>()),
+                registrationRepo: context.read<RegistrationRepo>(),
+              ),
             ),
             BlocProvider<IntroBloc>(
               create: (BuildContext context) => IntroBloc(),
+            ),
+            BlocProvider<ChatBloc>(
+              create: (BuildContext context) => ChatBloc(
+                chatRepo: context.read<ChatRepo>(),
+              ),
             ),
           ],
           child: const TechTalentApp(),

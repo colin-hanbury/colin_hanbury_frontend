@@ -22,9 +22,10 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         event.email,
         event.password,
       );
-      emitter(state.copyWith(status: RegistrationStatus.unregistered));
+      emitter(state.copyWith(status: RegistrationStatus.registered));
     } catch (e) {
-      emitter(state.copyWith(status: RegistrationStatus.error));
+      emitter(state.copyWith(
+          status: RegistrationStatus.error, error: e.toString()));
     }
   }
 }

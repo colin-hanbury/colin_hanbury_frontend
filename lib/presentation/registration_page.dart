@@ -64,7 +64,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
           });
           return const SizedBox();
         case RegistrationStatus.error:
-          return _registrationForm();
+          return Stack(
+            children: [
+              _registrationForm(),
+              _showAlert(state.error),
+            ],
+          );
         case RegistrationStatus.loading:
           return const Center(
             child: CircularProgressIndicator(),
@@ -73,6 +78,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
           return _registrationForm();
       }
     });
+  }
+
+  Widget _showAlert(String error) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => AlertDialog(
+        title: const Text('Error'),
+        content: SingleChildScrollView(
+          child: Text(error),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Dismiss'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+    return const SizedBox();
   }
 
   Widget _registrationForm() {

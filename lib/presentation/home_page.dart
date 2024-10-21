@@ -31,26 +31,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text('Tech Talent WA'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: Text(
+          'About Colin',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              // fontStyle: FontStyle.italic,
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
+        ),
         centerTitle: true,
         actions: [_themeSwitcher()],
       ),
       body: Expanded(
-        child: Column(
-          children: [
-            _auth(),
-            Expanded(
-              child: _tutorial(),
-            ),
-          ],
+        child: Expanded(
+          child: _tutorial(),
         ),
       ),
     );
   }
 
   Widget _auth() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _login(),
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
 
             double scrollDiff =
                 amountScrolled - (amountScrolled - screenHeight);
-            final imageSlide = (screenHeight / screenHeight) *
+            final imageSlide = (screenWidth / screenHeight) *
                 (amountScrolled - (screenHeight * currSection));
 
             log("-----------------------------");
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
               controller: _controller,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                    minHeight: screenHeight, maxWidth: screenWidth),
+                    minHeight: screenHeight * 5, maxWidth: screenWidth),
                 child: IntrinsicHeight(
                   child: Column(
                     children: [
@@ -144,16 +145,26 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Image.asset(
-                                        _images[0],
-                                        height: imageHeight,
-                                        width: imageHeight,
+                                      Icon(
+                                        Icons.android_outlined,
+                                        color: Colors.lightGreen,
+                                        size: imageHeight,
                                       ),
-                                      Image.asset(
-                                        _images[1],
-                                        height: imageHeight,
-                                        width: imageHeight,
+                                      Icon(
+                                        Icons.javascript,
+                                        color: Colors.blueAccent,
+                                        size: imageHeight,
                                       ),
+                                      // Image.asset(
+                                      //   _images[0],
+                                      //   height: imageHeight,
+                                      //   width: imageHeight,
+                                      // ),
+                                      // Image.asset(
+                                      //   _images[1],
+                                      //   height: imageHeight,
+                                      //   width: imageHeight,
+                                      // ),
                                     ],
                                   ),
                                   Row(
@@ -161,17 +172,27 @@ class _HomePageState extends State<HomePage> {
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Image.asset(
-                                        _images[2],
-                                        height: imageHeight,
-                                        width: imageHeight,
-                                        // fit: BoxFit.fill,
+                                      Icon(
+                                        Icons.bug_report_outlined,
+                                        color: Colors.red,
+                                        size: imageHeight,
                                       ),
-                                      Image.asset(
-                                        _images[3],
-                                        height: imageHeight,
-                                        width: imageHeight,
+                                      Icon(
+                                        Icons.cloud_circle_outlined,
+                                        color: Colors.amberAccent,
+                                        size: imageHeight,
                                       ),
+                                      // Image.asset(
+                                      //   _images[2],
+                                      //   height: imageHeight,
+                                      //   width: imageHeight,
+                                      //   // fit: BoxFit.fill,
+                                      // ),
+                                      // Image.asset(
+                                      //   _images[3],
+                                      //   height: imageHeight,
+                                      //   width: imageHeight,
+                                      // ),
                                     ],
                                   ),
                                 ],
@@ -180,7 +201,8 @@ class _HomePageState extends State<HomePage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Text(
-                                    "We find the talent",
+                                    "I've worked on\na wide range of\ntechnologies",
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: currSection < 1
                                           ? 2.0 * (amountScrolled * 0.01) + 10.0
@@ -209,16 +231,16 @@ class _HomePageState extends State<HomePage> {
                                 currSection == 0
                                     ? 0.0
                                     : currSection >= 3
-                                        ? screenWidth - imageHeight
-                                        : currSection % 2 == 0
-                                            ? screenWidth - imageHeight
-                                            : imageSlide,
+                                        ? screenWidth
+                                        : currSection == 2
+                                            ? imageSlide
+                                            : 0,
                                 currSection == 0
                                     ? screenHeight
                                     : currSection >= 3
                                         ? screenHeight * 2
-                                        : currSection % 2 == 0
-                                            ? amountScrolled - screenHeight
+                                        : currSection >= 2
+                                            ? amountScrolled - (screenHeight)
                                             : screenHeight,
                               ),
                               child: Align(
@@ -245,19 +267,26 @@ class _HomePageState extends State<HomePage> {
                               /// against scroll
                             ),
                             child: const Align(
-                              alignment: Alignment.center,
+                              alignment: Alignment.topCenter,
                               child: Text(
-                                "Tell us what you're looking for",
+                                "Check out my github",
                                 style: TextStyle(height: 20.0),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      ConstrainedBox(
-                        constraints:
-                            BoxConstraints(minHeight: screenHeight * 4),
-                        child: SizedBox(),
+                      Transform.translate(
+                        offset: Offset(
+                          0,
+                          currSection >= 3
+                              ? screenHeight * 2
+                              : screenHeight * (screenHeight * currSection),
+                        ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(minHeight: screenHeight),
+                          child: _auth(),
+                        ),
                       ),
                     ],
                   ),
@@ -313,8 +342,9 @@ class _HomePageState extends State<HomePage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      icon: const Icon(
-        Icons.more_vert,
+      icon: Icon(
+        Icons.format_color_fill_outlined,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
       itemBuilder: (context) => [
         PopupMenuItem<int>(
