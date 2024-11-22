@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-class AssociatesService {
+class BlogsService {
   final dio = Dio();
   final baseURL =
       'https://colin-hanbury-showcase-server-511903749491.australia-southeast2.run.app';
@@ -10,7 +10,7 @@ class AssociatesService {
     return response.data;
   }
 
-  Future<dynamic> getAssociates() async {
+  Future<dynamic> getBlogs() async {
     Response response = await dio.get('$baseURL/associates');
     return response.data;
     // return [
