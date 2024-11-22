@@ -15,7 +15,7 @@ class Chat {
     return Chat(
       chatRoomId: response['roomId'],
       messages: response['messages'] as List<ChatMessage>,
-      members: response['messages'] as List<String>,
+      members: response['members'] as List<String>,
     );
   }
 }

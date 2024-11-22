@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:colin_hanbury_frontend/bloc/intro/intro_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/intro/intro_event.dart';
 import 'package:colin_hanbury_frontend/bloc/intro/intro_state.dart';
@@ -41,11 +39,40 @@ class _HomePageState extends State<HomePage> {
         ),
         centerTitle: true,
         actions: [_themeSwitcher()],
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: Scaffold.of(context).openDrawer,
+            icon: Icon(
+              Icons.menu,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text(
+                'Blogs',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+              onTap: () => Navigator.pushNamed(context, Routes.blogs),
+              // {
+              //   // Update the state of the app
+              //   Navigator.pushNamed(context, Routes.blogs);
+              //   // Then close the drawer
+              //   Navigator.pop(context);
+              // },
+            ),
+          ],
+        ),
       ),
       body: Expanded(
-        child: Expanded(
-          child: _tutorial(),
-        ),
+        child: _tutorial(),
       ),
     );
   }
@@ -99,20 +126,20 @@ class _HomePageState extends State<HomePage> {
                 ? amountScrolled ~/ screenHeight
                 : 0;
 
-            double scrollDiff =
-                amountScrolled - (amountScrolled - screenHeight);
+            // double scrollDiff =
+            //     amountScrolled - (amountScrolled - screenHeight);
             final imageSlide = (screenWidth / screenHeight) *
                 (amountScrolled - (screenHeight * currSection));
 
-            log("-----------------------------");
-            log("CURRENT SECTION = $currSection");
-            log("-----------------------------");
-            log("Total Scroll = $amountScrolled");
-            log("-----------------------------");
-            log("Screen Width = $screenWidth");
-            log("-----------------------------");
-            log("Image Slide = $imageSlide");
-            log("-----------------------------");
+            // log("-----------------------------");
+            // log("CURRENT SECTION = $currSection");
+            // log("-----------------------------");
+            // log("Total Scroll = $amountScrolled");
+            // log("-----------------------------");
+            // log("Screen Width = $screenWidth");
+            // log("-----------------------------");
+            // log("Image Slide = $imageSlide");
+            // log("-----------------------------");
             return SingleChildScrollView(
               controller: _controller,
               child: ConstrainedBox(
@@ -151,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                                         size: imageHeight,
                                       ),
                                       Icon(
-                                        Icons.javascript,
+                                        Icons.cloud_circle_rounded,
                                         color: Colors.blueAccent,
                                         size: imageHeight,
                                       ),
@@ -173,12 +200,12 @@ class _HomePageState extends State<HomePage> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Icon(
-                                        Icons.bug_report_outlined,
-                                        color: Colors.red,
+                                        Icons.school_rounded,
+                                        color: Colors.grey,
                                         size: imageHeight,
                                       ),
                                       Icon(
-                                        Icons.cloud_circle_outlined,
+                                        Icons.developer_mode_rounded,
                                         color: Colors.amberAccent,
                                         size: imageHeight,
                                       ),
@@ -223,6 +250,43 @@ class _HomePageState extends State<HomePage> {
                         alignment: Alignment.center,
                         fit: StackFit.passthrough,
                         children: [
+                          Transform.translate(
+                            offset: Offset(
+                              0,
+                              currSection == 0
+                                  ? screenHeight
+                                  : currSection >= 3
+                                      ? screenHeight * 2
+                                      : currSection % 2 == 0
+                                          ? amountScrolled - screenHeight
+                                          : screenHeight,
+
+                              /// against scroll
+                            ),
+                            child: ConstrainedBox(
+                              constraints:
+                                  BoxConstraints(maxHeight: screenHeight),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                fit: StackFit.passthrough,
+                                children: [
+                                  Image.asset(
+                                    'assets/world-map.png',
+                                    fit: BoxFit.fill,
+                                    // height: imageHeight,
+                                    // width: imageHeight,
+                                  ),
+                                  const Text(
+                                    "In April 2023 I decided to take a career break and do some travelling in Asia.",
+                                    style: TextStyle(
+                                      height: 20.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           ConstrainedBox(
                             constraints:
                                 BoxConstraints(minHeight: screenHeight),
@@ -246,31 +310,10 @@ class _HomePageState extends State<HomePage> {
                               child: Align(
                                 alignment: Alignment.bottomLeft,
                                 child: Image.asset(
-                                  'assets/businesswoman.png',
+                                  'assets/plane.png',
                                   height: imageHeight,
                                   width: imageHeight,
                                 ),
-                              ),
-                            ),
-                          ),
-                          Transform.translate(
-                            offset: Offset(
-                              0,
-                              currSection == 0
-                                  ? screenHeight
-                                  : currSection >= 3
-                                      ? screenHeight * 2
-                                      : currSection % 2 == 0
-                                          ? amountScrolled - screenHeight
-                                          : screenHeight,
-
-                              /// against scroll
-                            ),
-                            child: const Align(
-                              alignment: Alignment.topCenter,
-                              child: Text(
-                                "Check out my github",
-                                style: TextStyle(height: 20.0),
                               ),
                             ),
                           ),

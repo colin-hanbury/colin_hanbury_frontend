@@ -1,30 +1,28 @@
-import 'package:colin_hanbury_frontend/models/visitor.dart';
+import 'package:colin_hanbury_frontend/models/blog.dart';
 import 'package:equatable/equatable.dart';
 
-enum AssociatesStatus {
+enum BlogsStatus {
   initial,
   successful,
   loading,
   error,
 }
 
-class AssociatesState extends Equatable {
-  final List<Associate> associates;
-  final AssociatesStatus status;
+class BlogsState extends Equatable {
+  final List<Blog> blogs;
+  final BlogsStatus status;
 
-  AssociatesState({
-    this.status = AssociatesStatus.initial,
-    List<Associate>? associates,
-  }) : associates = associates ?? const [];
+  BlogsState({
+    this.status = BlogsStatus.initial,
+    List<Blog>? blogs,
+  }) : blogs = blogs ?? const [];
 
   @override
-  List<Object?> get props => [status, associates];
+  List<Object?> get props => [status, blogs];
 
-  AssociatesState copyWith({
-    List<Associate>? associates,
-    AssociatesStatus? status,
+  BlogsState copyWith({
+    List<Blog>? blogs,
+    BlogsStatus? status,
   }) =>
-      AssociatesState(
-          associates: associates ?? this.associates,
-          status: status ?? this.status);
+      BlogsState(blogs: blogs ?? this.blogs, status: status ?? this.status);
 }

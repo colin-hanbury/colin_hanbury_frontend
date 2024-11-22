@@ -1,3 +1,4 @@
+import 'package:colin_hanbury_frontend/presentation/blogs_page.dart';
 import 'package:colin_hanbury_frontend/presentation/chat_page.dart';
 import 'package:colin_hanbury_frontend/presentation/home_page.dart';
 import 'package:colin_hanbury_frontend/presentation/login_page.dart';
@@ -9,6 +10,7 @@ class Routes {
   static const String chat = 'chat';
   static const String login = 'login';
   static const String registration = 'registration';
+  static const String blogs = 'blogs';
 }
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -21,6 +23,8 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(builder: (context) => const LoginPage());
     case Routes.registration:
       return MaterialPageRoute(builder: (context) => const RegistrationPage());
+    case Routes.blogs:
+      return MaterialPageRoute(builder: (context) => const BlogsPage());
     default:
       return MaterialPageRoute(builder: (context) => const HomePage());
   }

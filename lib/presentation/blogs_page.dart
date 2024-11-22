@@ -1,54 +1,84 @@
-import 'package:colin_hanbury_frontend/bloc/associates/associates_bloc.dart';
-import 'package:colin_hanbury_frontend/bloc/associates/associates_event.dart';
-import 'package:colin_hanbury_frontend/bloc/associates/associates_state.dart';
+import 'package:colin_hanbury_frontend/bloc/blogs/blogs_bloc.dart';
+import 'package:colin_hanbury_frontend/bloc/blogs/blogs_event.dart';
+import 'package:colin_hanbury_frontend/bloc/blogs/blogs_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AssociatesPage extends StatefulWidget {
-  const AssociatesPage({super.key});
+class BlogsPage extends StatefulWidget {
+  const BlogsPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _AssociatesPageState();
+  State<StatefulWidget> createState() => _BlogsPageState();
 }
 
-class _AssociatesPageState extends State<AssociatesPage> {
+class _BlogsPageState extends State<BlogsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Center(
-          child: Text('Associates'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: Text(
+          'Blogs',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
         ),
-        actions: const [SearchBar()],
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 250.0),
+              child: SearchBar(
+                backgroundColor: WidgetStateProperty.all(
+                    Theme.of(context).colorScheme.secondaryContainer),
+                hintText: 'Search blogs',
+                hintStyle: WidgetStateProperty.all(
+                  TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
+                ),
+                trailing: [
+                  Icon(
+                    Icons.search_outlined,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      body: _associates(),
+      body: _blogs(),
     );
   }
 
-  Widget _associates() {
-    return BlocBuilder<AssociatesBLoC, AssociatesState>(
+  Widget _blogs() {
+    return BlocBuilder<BlogsBLoC, BlogsState>(
       builder: (context, state) {
         switch (state.status) {
-          case AssociatesStatus.successful:
+          case BlogsStatus.successful:
             return Expanded(
               child: ListView.builder(
-                itemCount: state.associates.length,
+                itemCount: state.blogs.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(state.associates[index].name ?? ''),
+                    title: Text(state.blogs[index].title ?? ''),
                     subtitle: Text(
-                      state.associates[index].date.toString(),
+                      state.blogs[index].date.toString(),
                     ),
                   );
                 },
               ),
             );
           default:
-            context.read<AssociatesBLoC>().add(
-                  LoadAssociates(),
+            context.read<BlogsBLoC>().add(
+                  LoadBlogs(),
                 );
-            return const Text('No associates');
+            return const Center(
+              child: Text('No blogs to show'),
+            );
         }
       },
     );

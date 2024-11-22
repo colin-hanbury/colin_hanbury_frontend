@@ -1,20 +1,16 @@
 import 'dart:developer';
 
-import 'package:colin_hanbury_frontend/models/visitor.dart';
-import 'package:colin_hanbury_frontend/services/visitor_service.dart';
+import 'package:colin_hanbury_frontend/models/blog.dart';
+import 'package:colin_hanbury_frontend/services/blogs_service.dart';
 
-class AssociatesRepo {
-  final AssociatesService associatesAPI = AssociatesService();
+class BlogsRepo {
+  final BlogsService blogsAPI = BlogsService();
 
-  Future<List<Associate>> getVisitors() async {
-    List<dynamic> response = await associatesAPI.getAssociates();
-    List<Associate> associates =
-        response.map((jsonObject) => Associate.fromJson(jsonObject)).toList();
-    log(associates.toString());
-    return associates;
-  }
-
-  Future<dynamic> addAssociate(String name) async {
-    return await associatesAPI.addAssociate(name);
+  Future<List<Blog>> getBlogs() async {
+    List<dynamic> response = await blogsAPI.getBlogs();
+    List<Blog> blogs =
+        response.map((jsonObject) => Blog.fromJson(jsonObject)).toList();
+    log(blogs.toString());
+    return blogs;
   }
 }

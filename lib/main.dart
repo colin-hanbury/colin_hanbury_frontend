@@ -1,15 +1,15 @@
 import 'dart:developer';
 
-import 'package:colin_hanbury_frontend/bloc/associates/associates_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/auth/auth_bloc.dart';
+import 'package:colin_hanbury_frontend/bloc/blogs/blogs_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/chat/chat_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/intro/intro_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/registration/registration_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/theme/theme_bloc.dart';
 import 'package:colin_hanbury_frontend/bloc/theme/theme_state.dart';
 import 'package:colin_hanbury_frontend/presentation/home_page.dart';
-import 'package:colin_hanbury_frontend/repositories/associates_repo.dart';
 import 'package:colin_hanbury_frontend/repositories/auth_repo.dart';
+import 'package:colin_hanbury_frontend/repositories/blogs_repo.dart';
 import 'package:colin_hanbury_frontend/repositories/chat_repo.dart';
 import 'package:colin_hanbury_frontend/repositories/registration_repo.dart';
 import 'package:colin_hanbury_frontend/utils/routes.dart';
@@ -25,7 +25,7 @@ void main() async {
       MultiRepositoryProvider(
         providers: [
           RepositoryProvider(
-            create: (BuildContext context) => AssociatesRepo(),
+            create: (BuildContext context) => BlogsRepo(),
           ),
           RepositoryProvider(
             create: (BuildContext context) => AuthRepo(),
@@ -38,9 +38,9 @@ void main() async {
         ],
         child: MultiBlocProvider(
           providers: [
-            BlocProvider<AssociatesBLoC>(
+            BlocProvider<BlogsBLoC>(
               create: (BuildContext context) =>
-                  AssociatesBLoC(visitorRepo: context.read<AssociatesRepo>()),
+                  BlogsBLoC(blogsRepo: context.read<BlogsRepo>()),
             ),
             BlocProvider<ThemeBloc>(
               create: (BuildContext context) => ThemeBloc(),

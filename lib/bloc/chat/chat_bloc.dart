@@ -14,7 +14,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   final ChatRepo chatRepo;
   StreamSubscription<String>? chatMessagesSub;
-  // Stream? chatMessagesStream;
+  // Stream?
 
   void onMessageSent(MessageSent event, Emitter<ChatState> emitter) {
     emitter(state.copyWith(status: ChatStatus.loading));

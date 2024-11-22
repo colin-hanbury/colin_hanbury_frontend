@@ -1,5 +1,6 @@
 class ChatMessage {
   final String? chatRoomId;
+  final String? chatMessageId;
   final String? message;
   final String? sender;
   final List<String>? receivers;
@@ -7,6 +8,7 @@ class ChatMessage {
 
   ChatMessage({
     this.chatRoomId,
+    this.chatMessageId,
     this.message,
     this.sender,
     this.receivers,
@@ -17,6 +19,7 @@ class ChatMessage {
     final messageData = response['message'];
     return ChatMessage(
       chatRoomId: response['roomId'],
+      chatMessageId: response['messageId'],
       sender: messageData['sender'],
       receivers: messageData['recievers'] as List<String>,
       timestamp: DateTime.tryParse(messageData['timestamp']),
